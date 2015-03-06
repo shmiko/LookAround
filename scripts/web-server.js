@@ -90,11 +90,16 @@ StaticServlet.prototype.handleRequest = function(req, res) {
   var path = ('./' + req.url.pathname).replace('//','/').replace(/%(..)/g, function(match, hex){
     return String.fromCharCode(parseInt(hex, 16));
   });
+  console.log('path is', path)
   var parts = path.split('/');
+  console.log('path is now ', path)
   if (parts[parts.length-1].charAt(0) === '.')
+    console.log('2 path is now ', path);
     return self.sendForbidden_(req, res, path);
+    console.log('1st error', err);
   fs.stat(path, function(err, stat) {
     if (err)
+      console.log('error', err);
       return self.sendMissing_(req, res, path);
     console.log("stat",stat.isDirectory());
     if (stat.isDirectory())
